@@ -6,6 +6,7 @@ import com.test.pictora.exceptions.ResourceNotFoundException;
 import com.test.pictora.payloads.UserDto;
 import com.test.pictora.repositories.UserRepo;
 import com.test.pictora.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,8 @@ public class UserServiceImp implements UserService {
     @Autowired
 
     private UserRepo userRepo;
+    @Autowired
+    private ModelMapper modelMapper;
     public UserDto createUser(UserDto userDto){
         User user = this.dtoToUser(userDto);
         this.userRepo.save(user);
@@ -61,21 +64,22 @@ this.userRepo.delete(user);
     }
     public User dtoToUser(UserDto userDto){
 
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setEmail(userDto.getEmail());
-        user.setName(userDto.getName());
-        user.setPassword(userDto.getPassword());
-        user.setAbout(userDto.getAbout());
+        User user = this.modelMapper.map(userDto,User.class);
+//        user.setId(userDto.getId());
+//        user.setEmail(userDto.getEmail());
+//        user.setName(userDto.getName());
+//        user.setPassword(userDto.getPassword());
+//        user.setAbout(userDto.getAbout());
+
         return user;
     }
     public UserDto userToDto(User user){
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setEmail(user.getEmail());
-        userDto.setName(user.getName());
-        userDto.setPassword(user.getPassword());
-        userDto.setAbout(user.getAbout());
+        UserDto userDto = this.modelMapper.map(user,UserDto.class  );
+//        userDto.setId(user.getId());
+//        userDto.setEmail(user.getEmail());
+//        userDto.setName(user.getName());
+//        userDto.setPassword(user.getPassword());
+//        userDto.setAbout(user.getAbout());
         return userDto;
     }
 

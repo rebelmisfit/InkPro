@@ -2,6 +2,7 @@ package com.test.pictora.controllers;
 
 import com.test.pictora.payloads.UserDto;
 import com.test.pictora.services.UserService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,14 @@ public class UserController {
     private UserService userService;
 //create - post reqs
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto)
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto)
     {
      UserDto createUserDto = this.userService.createUser(userDto);
      return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
     // update - put reqs
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable Integer userId)
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable Integer userId)
     {
     UserDto updateduser = this.userService.updateUser(userDto,userId);
 
