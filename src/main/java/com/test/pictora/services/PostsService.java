@@ -1,6 +1,7 @@
 package com.test.pictora.services;
 
 import com.test.pictora.entities.Posts;
+import com.test.pictora.payloads.PostResponse;
 import com.test.pictora.payloads.PostsDto;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public interface PostsService {
     //delete
     void deletePost(Integer postId);
     //get all posts
-    List<PostsDto> getAllPosts();
+    PostResponse
+    getAllPosts(Integer pageNo, Integer pageSize, String sortBy, String sortDir);
     //get single post by id
     PostsDto getPostsById(Integer postId);
     //get posts by category
@@ -21,6 +23,6 @@ public interface PostsService {
     //get posts by user
     List<PostsDto> getPostsByUser(Integer userId);
     //search posts
-    List<Posts> searchPosts(String keywords);
+    List<PostsDto> searchPosts(String keywords);
 
 }

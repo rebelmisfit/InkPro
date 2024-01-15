@@ -2,6 +2,7 @@ package com.test.pictora.controllers;
 
 import com.test.pictora.entities.Posts;
 import com.test.pictora.payloads.ApiResponse;
+import com.test.pictora.payloads.PostResponse;
 import com.test.pictora.payloads.PostsDto;
 import com.test.pictora.services.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,15 @@ public class PostController {
     }
     // get all posts
     @GetMapping("/posts")
-    public ResponseEntity<List <PostsDto>> getAllPosts()
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam (value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber , @RequestParam (value = "pageSize", defaultValue = "1", required = false) Integer pageSize,
+                                                    @RequestParam (value = "sortBy", defaultValue = "id", required = false) String sortBy,
+                                                    @RequestParam (value = "sortDir", defaultValue = "ASC", required = false) String sortDir)
+
+
     {
-        List<PostsDto> allPost = this.postsService.getAllPosts();
-        return new ResponseEntity<List<PostsDto>>(allPost, HttpStatus.OK);
+        PostResponse postResponse = this.postsService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
+
+        return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
     }
     //get single post
     @GetMapping("/posts/{postId}")
@@ -70,6 +76,13 @@ public class PostController {
     {
        this.postsService.updatePost(postsDto, postId);
          return new ResponseEntity<PostsDto>(postsDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/posts/search/{keywords}")
+    public ResponseEntity<List<PostsDto>> searchPostByTitle(@PathVariable String keywords)
+    {
+        List<PostsDto> posts = this.postsService.searchPosts(keywords);
+        return new ResponseEntity<List<PostsDto>>(posts, HttpStatus.OK);
     }
 
 }
