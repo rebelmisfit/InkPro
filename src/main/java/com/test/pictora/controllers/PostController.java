@@ -1,5 +1,6 @@
 package com.test.pictora.controllers;
 
+import com.test.pictora.config.Constants;
 import com.test.pictora.entities.Posts;
 import com.test.pictora.payloads.ApiResponse;
 import com.test.pictora.payloads.PostResponse;
@@ -45,9 +46,10 @@ public class PostController {
     }
     // get all posts
     @GetMapping("/posts")
-    public ResponseEntity<PostResponse> getAllPosts(@RequestParam (value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber , @RequestParam (value = "pageSize", defaultValue = "1", required = false) Integer pageSize,
-                                                    @RequestParam (value = "sortBy", defaultValue = "id", required = false) String sortBy,
-                                                    @RequestParam (value = "sortDir", defaultValue = "ASC", required = false) String sortDir)
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam (value = "pageNumber", defaultValue = Constants.PAGE_NUMBER, required = false) Integer pageNumber ,
+                                                    @RequestParam (value = "pageSize", defaultValue = Constants.PAGE_SIZE, required = false) Integer pageSize,
+                                                    @RequestParam (value = "sortBy", defaultValue = Constants.SORT_BY, required = false) String sortBy,
+                                                    @RequestParam (value = "sortDir", defaultValue = Constants.SORT_DIR, required = false) String sortDir)
 
 
     {
